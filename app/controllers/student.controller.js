@@ -34,14 +34,19 @@ const Account = require("./account.controller.js");
 
 }
 
-exports.findAllByCollege = (req, res)=>{ //return list students who study in college
-    const id = req.params.id;
-    Student.findAll({where: {collegeId: id}}).then(d=>{res.status(298).send(d)}).catch({msg: "error!"})
-}
-
 exports.update = (req, res)=>{ //update the student 
     const id = req.params.id;
     Student.update(req.body, {where:{id:id}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
+}
+
+exports.findByFacultyId = (req, res) => {
+    const facultyId = req.params.facultyId;
+    Student.findAll({where: {facultyId: facultyId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+}
+
+exports.findByProjectId = (req, res) => {
+    const projectMId = req.params.projectId;
+    Student.findAll({where: {projectMId: projectMId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }
 
 exports.findByAccountId = (req, res)=>{//
@@ -49,7 +54,14 @@ exports.findByAccountId = (req, res)=>{//
     Student.findOne({where: {accountId: id}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }
 
-exports.findByFacultyId = (req, res) => {
-    const facultyId = req.params.facultyId;
-    Student.findAll({where: {facultyId: facultyId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+//*********************************************************************************** */
+
+exports.findAllByCollege = (req, res)=>{ //return list students who study in college
+    const id = req.params.id;
+    Student.findAll({where: {collegeId: id}}).then(d=>{res.status(298).send(d)}).catch({msg: "error!"})
 }
+
+
+
+
+
