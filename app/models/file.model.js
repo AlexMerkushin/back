@@ -3,21 +3,28 @@ const { Sequelize } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
     const File = sequelize.define("file", {
-        type: {
-            type: Sequelize.STRING
+        Extension: {
+            type: Sequelize.STRING(50),
+            allowNull: false
         },
         name: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING(50),
+            allowNull: false
         },
-        data: {
-            type: Sequelize.BLOB('long')
+        type: {
+            type: Sequelize.ENUM("הצעת פרויקט", "ספר פרויקט"),
+            allowNull: false
         },
-        main: Sequelize.BOOLEAN,
+        file: {
+            type: Sequelize.BLOB('long'),
+            allowNull: false
+        },
         createAt: {
             type: Sequelize.DATEONLY,
             defaultValue: Sequelize.fn("now")
         },
-        
+        ApprovalMentorDate: Sequelize.DATE,
+        ApprovalHeadDate: Sequelize.DATE, 
     })
     return File;
 }

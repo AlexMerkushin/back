@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
   };
 
 
-  if (req.body.type === 'worker' || req.body.type === 'examine') { // create only account
+  if (req.body.type === 'worker' || req.body.type === 'boss') { // create only account
     Account.create(account, { attributes: ['id', 'firstName', 'lastName', 'email', 'sex', 'addres', 'phone'] }).then(account => {
       try {
         const mail = require("./mail.controller.js");
@@ -129,7 +129,21 @@ exports.update = (req, res) => {
   }).catch(e => { res.status(298).send("שגיאה לא ידועה") });
 };
 
-
+exports.findById = (req, res) => {
+  const id = req.params.id;
+  Account.findOne({where: {id: id}, attributes: {exclude:["password"]}}).then(account => {
+    res.status(298).send(account);
+  }).catch(e => {
+    res.status(299).send("שכיאה");
+  })
+}
+exports.findAll = (req, res) => {
+  Account.findAll({attributes: {exclude:["password"]}}).then(account => {
+    res.status(298).send(account);
+  }).catch(e => {
+    res.status(299).send(שגיאה);
+  })
+}
 exports.find = async (req, res) => {
   const type = req.params.type;
   const id = req.params.id;
