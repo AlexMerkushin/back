@@ -5,6 +5,10 @@ const { Sequelize } = require("sequelize");
 // return id column in table
 module.exports= (sequelize, Sequelize)=>{
     const Student = sequelize.define("student", {
+        accountId: {
+            primaryKey: true,
+            type: Sequelize.CHAR(10)
+        },
         finishDate: Sequelize.DATE(),
         gradeProject: {
             type: Sequelize.INTEGER,

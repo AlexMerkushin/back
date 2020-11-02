@@ -4,7 +4,8 @@ module.exports = app => {
     const mentors = require("../controllers/mentor.controller.js");  
     var router = require("express").Router();
     router.post("/", mentors.create);
-    router.put("/:id", mentors.update);
+    router.put("/:accountId", mentors.update);
     router.get("/freelance", mentors.findFreelancer);
+    router.get("/:accountId", mentors.findById);
     app.use('/api/mentors', router);
   };

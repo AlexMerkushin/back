@@ -3,6 +3,10 @@ const { Sequelize } = require("sequelize");
 
 module.exports=(sequelize, Sequelize)=>{
     const Mentor = sequelize.define("mentor", {
+        accountId: {
+            primaryKey: true,
+            type: Sequelize.CHAR(10)
+        },
         Education: Sequelize.STRING(50),
         WorkLocation: Sequelize.STRING(50),
         Resume: Sequelize.BLOB('long'),

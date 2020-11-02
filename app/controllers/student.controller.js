@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 exports.create = (req, res) => {  //create a new student
     
     const student={
-    accountId: req.body.id,
+    accountId: req.body.accountId,
     mentorId: req.body.mentorId,
     facultyId: req.body.facultyId,
     projectMId: req.body.projectMId,
@@ -35,8 +35,8 @@ const Account = require("./account.controller.js");
 }
 
 exports.update = (req, res)=>{ //update the student 
-    const id = req.params.id;
-    Student.update(req.body, {where:{id:id}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
+    const accountId = req.params.accountId;
+    Student.update(req.body, {where:{accountId:accountId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
 }
 
 exports.findByFacultyId = (req, res) => {
@@ -50,8 +50,8 @@ exports.findByProjectId = (req, res) => {
 }
 
 exports.findByAccountId = (req, res)=>{//
-    const id = req.params.id;
-    Student.findOne({where: {accountId: id}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+    const accountId = req.params.accountId;
+    Student.findOne({where: {accountId: accountId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }
 
 //*********************************************************************************** */
