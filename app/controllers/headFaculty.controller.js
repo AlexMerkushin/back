@@ -23,7 +23,7 @@ const Account = require("./account.controller.js");
   });
 }
 
-exports.update = (req, res)=>{ //update the mentor 
+exports.update = (req, res)=>{ //update the headFaculty 
     const accountId = req.params.accountId;
     HeadFaculty.update(req.body, {where:{accountId:accountId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
 }

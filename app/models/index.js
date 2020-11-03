@@ -102,7 +102,7 @@ db.project.hasOne(db.test, {
 
 //forgien key 1:n
 db.mentor.hasMany(db.student, {onDelete: "RESTRICT"});
-db.faculty.hasMany(db.student, {onDelete: "CASCADE"});
+db.faculty.hasMany(db.student, {onDelete: "RESTRICT"});
 db.projectM.hasMany(db.student, {onDelete: "RESTRICT"});
 db.projectM.hasMany(db.file, {onDelete: "CASCADE"});
 db.mentor.hasMany(db.projectM, {onDelete: "RESTRICT"});
