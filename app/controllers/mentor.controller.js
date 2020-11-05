@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 exports.create = (req, res) => {  //create a new mentor
     
     const mentor={
-    accountId: req.body.accountId,
+    accountId: req.body.id,
     Education: req.body.education,
     WorkLocation: req.body.workLocation
 };

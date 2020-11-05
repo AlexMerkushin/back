@@ -67,6 +67,7 @@ require("./app/routes/teacher.routes")(app);
 require("./app/routes/test.routes")(app);
 require("./app/routes/headFaculty.routes")(app);
 require("./app/routes/faculty.routes")(app);
+require("./app/routes/projectM.routes")(app);
 
 require("./app/routes/mentor.routes.js")(app);
 

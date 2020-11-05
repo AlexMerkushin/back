@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
     const bcrypt = require('bcrypt');
     const Account = sequelize.define("account", {
-        id: {
+        accountId: {
             type: Sequelize.CHAR(9),
             primaryKey: true,
             allowNull: false

@@ -6,7 +6,7 @@ exports.create = (req, res) => { // create a new teacher
     const teacher = {
         out: req.body.out,
         adocation: req.body.adocation,
-        accountId: req.body.id,
+        accountId: req.body.accountId,
         collegeId: req.body.collegeId
     };
     const Account = require("./account.controller.js");
@@ -31,8 +31,8 @@ exports.findAll = (req, res) => { //find all teacher
 
 
 exports.update = (req, res) => { //update teacher
-    const id = req.params.id;
-    Teacher.update(req.body, { where: { id: id } }).then(d => { res.send(d) }).catch(res.send('e'))
+    const accountId = req.params.accountId;
+    Teacher.update(req.body, { where: { accountId: accountId } }).then(d => { res.send(d) }).catch(res.send('e'))
 }
 
 exports.findOne = (req, res) =>{ // find by account id

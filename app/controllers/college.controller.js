@@ -8,11 +8,11 @@ const college = {
     addres: req.body.addres,
     phone: req.body.phone,
     email: req.body.email,
-    accountId: req.body.id
+    accountId: req.body.accountId
 };
 const Account = require("./account.controller.js");
 Account.create(req,res).then(()=>{ // create new account (manger college)
-  College.create(college, {attributes: ['id', 'name', 'addres', 'phone', 'email']}) // create new college
+  College.create(college, {attributes: ['accountId', 'name', 'addres', 'phone', 'email']}) // create new college
     .then((data)=>{
         res.status(201).send(data)
     }).catch(e=>{

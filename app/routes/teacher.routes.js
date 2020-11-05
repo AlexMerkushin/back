@@ -8,7 +8,7 @@ module.exports = app => {
     router.get("/:id", teachers.findByPk);
     router.get("/college/:id", teachers.findByCollege);
     router.get("/findOne/:id", teachers.findOne);
-    router.put("/:id", teachers.update);
+    router.put("/:accountId", teachers.update);
     app.use('/api/teachers', router);
   };
   

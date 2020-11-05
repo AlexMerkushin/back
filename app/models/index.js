@@ -44,7 +44,8 @@ db.test = require("./test.model.js")(sequelize, Sequelize);
 db.account.hasOne(db.headFaculty, {
   foreignKey: {
     allowNull: false,
-    unique: true
+    unique: true,
+    name: "accountId"
   },
   onDelete:"CASCADE"
 });
@@ -52,14 +53,16 @@ db.account.hasOne(db.headFaculty, {
 db.account.hasOne(db.student, {
   foreignKey: {
     allowNull: false,
-    unique: true
+    unique: true,
+    name: "accountId"
   },
   onDelete:"CASCADE"
 });
 db.account.hasOne(db.mentor, {
   foreignKey: {
     allowNull: false,
-    unique: true
+    unique: true,
+    name: "accountId"
   },
   onDelete:"CASCADE"
 });
@@ -74,7 +77,8 @@ db.faculty.hasOne(db.headFaculty, {
 db.account.hasOne(db.teacher, {
   foreignKey: {
     allowNull: false,
-    unique: true
+    unique: true,
+    name: "accountId"
   },
   onDelete:"CASCADE"
 });
@@ -88,7 +92,8 @@ db.student.hasOne(db.project, {
 db.account.hasOne(db.college, {
   foreignKey: {
     allowNull: false,
-    unique: true
+    unique: true,
+    name: "accountId"
   },
   onDelete:"CASCADE"
 });

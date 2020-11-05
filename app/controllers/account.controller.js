@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
   }
 
   const account = {
-    id: req.body.id,
+    accountId: req.body.accountId,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
@@ -30,7 +30,7 @@ exports.create = async (req, res) => {
 
 
   if (req.body.type === 'worker' || req.body.type === 'boss') { // create only account
-    Account.create(account, { attributes: ['id', 'firstName', 'lastName', 'email', 'sex', 'addres', 'phone'] }).then(account => {
+    Account.create(account, { attributes: ['accountId', 'firstName', 'lastName', 'email', 'sex', 'addres', 'phone'] }).then(account => {
       try {
         const mail = require("./mail.controller.js");
         mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  "+ pass); // send mail with new password to account
@@ -54,9 +54,9 @@ exports.create = async (req, res) => {
 // Find a single Tutorial with an id
 exports.login = (req, res) => {
 
-  const id = req.params.id;
+  const accountId = req.params.accountId;
   const password = req.params.password;
-  Account.findByPk(id).then(user => { // find user by id 
+  Account.findOne({ where: { accountId: accountId } }).then(user => { // find user by id 
     if (user) { //if user is find
       const bcrypt = require('bcrypt');
       bcrypt.compare(password, user.password, (err, data) => { // Compare password from form to real password
@@ -67,6 +67,12 @@ exports.login = (req, res) => {
           switch (user.type) {
             case 'student':
               temp = db.student;
+              break;
+            case 'mentor':
+              temp = db.mentor;
+              break;
+            case 'headFaculty':
+              temp = db.headFaculty;
               break;
             case 'teacher':
               temp = db.teacher
@@ -80,7 +86,7 @@ exports.login = (req, res) => {
               if (user2) { // user find in controller
                 res.status(298).send([
                   {
-                    id: user.id,
+                    accountId: user.accountId,
                     fullName: user.firstName + ' ' + user.lastName,
                     type: user.type
                   }, user2]); // send all data 
@@ -91,7 +97,7 @@ exports.login = (req, res) => {
           }
           else { // only for examine or worker
             res.status(298).send([{
-              id: user.id,
+              accountId: user.accountId,
               fullName: user.firstName + ' ' + user.lastName,
               type: user.type
             }]);
@@ -108,9 +114,9 @@ exports.login = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const accountId = req.params.accountId;
   const password = req.params.password;
-  Account.findByPk(id).then(account => { //find by id 
+  Account.findByPk(accountId).then(account => { //find by id 
     if (account) { // if found it
       const bcrypt = require('bcrypt');
       bcrypt.compare(password, account.password, (err, data) => { // check the pasword
@@ -129,9 +135,9 @@ exports.update = (req, res) => {
   }).catch(e => { res.status(298).send("שגיאה לא ידועה") });
 };
 
-exports.findById = (req, res) => {
-  const id = req.params.id;
-  Account.findOne({where: {id: id}, attributes: {exclude:["password"]}}).then(account => {
+exports.findByAccountId = (req, res) => {
+  const accountId = req.params.accountId;
+  Account.findOne({where: {accountId: accountId}, attributes: {exclude:["password"]}}).then(account => {
     res.status(298).send(account);
   }).catch(e => {
     res.status(299).send("שכיאה");
@@ -184,8 +190,8 @@ exports.findAllByType = (req, res) => { // find all account with same type
 
 
 exports.delete = (req, res) => { // delete account
-  const id = req.params.id;
-  Account.destroy({ where: { id: id } }).then(account => {
+  const accountId = req.params.accountId;
+  Account.destroy({ where: { accountId: accountId } }).then(account => {
     if (account == 1) res.send("נמחק בהצלחה");
     else res.status(299).send("לא נמצאו רשומות למחיקה");
   }).catch(e => { res.status(299).send("שגיאה לא ידועה") });
