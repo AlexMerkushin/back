@@ -28,7 +28,10 @@ module.exports = (sequelize, Sequelize) => {
               },
         },
         phone: Sequelize.CHAR(10),
-        type: Sequelize.ENUM("student", "mentor", "headFaculty", "worker", "boss"),
+        type: {
+            type: Sequelize.ENUM("student", "mentor", "headFaculty", "worker", "boss"),
+            allowNull: false
+        },
         addres: Sequelize.STRING(50)
     })
 

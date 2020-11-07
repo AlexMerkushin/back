@@ -9,8 +9,12 @@ module.exports=(sequelize, Sequelize)=>{
         },
         Education: Sequelize.STRING(50),
         WorkLocation: Sequelize.STRING(50),
-        Resume: Sequelize.BLOB('long'),
-        Certificate: Sequelize.BLOB('long')
+        resume: Sequelize.BLOB('long'),
+        resumeName: Sequelize.STRING(50),
+        resumeExtension: Sequelize.STRING(50),
+        certificate: Sequelize.BLOB('long'),
+        certificateExtension: Sequelize.STRING(50),
+        certificateName: Sequelize.STRING(50)
     })
     return Mentor;
 }

@@ -18,7 +18,7 @@ module.exports = [
         sex: "נקבה",
         password: "654321",
         phone: "0509536622",
-        type: "examine"
+        type: "headFaculty"
     },
     {
         accountId: "127901205",
@@ -38,7 +38,7 @@ module.exports = [
         sex: "זכר",
         password: "951",
         phone: "0509536622",
-        type: "teacher"
+        type: "mentor"
     },
     {
         accountId: "129382677",
@@ -48,7 +48,7 @@ module.exports = [
         sex: "נקבה",
         password: "121",
         phone: "0509536622",
-        type: "college"
+        type: "boss"
     }
     
 ];

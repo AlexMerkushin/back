@@ -7,5 +7,6 @@ module.exports = app => {
     router.put("/:accountId", mentors.update);
     router.get("/freelance", mentors.findFreelancer);
     router.get("/:accountId", mentors.findById);
+    router.put("/resume/:accountId", mentors.uploadResume);
     app.use('/api/mentors', router);
   };

@@ -5,22 +5,18 @@ const File = db.file
 
 exports.upload = (req, res) => { // upload a new file
   File.create({
-    type: req.file.mimetype,
+    Extension: req.file.mimetype,
     name: req.file.originalname,
-    data: req.file.buffer, // conver to blob file
-    main: req.body.main,
-    projectId: req.body.projectId
+    file: req.file.buffer, // conver to blob file
+    projectId: req.body.projectId,
+    type: req.body.type
   }).then((file) => {
     try {
-      const Project = require("./project.controller.js")
-      Project.plusOne(req, res); // add one to status project
-
       // exit node.js app
       res.status(201).send({
         id: file.id,
         name: file.name,
         type: file.type,
-        main: file.main,
         createAt: new Date().toLocaleString()
       }); // return data project
     } catch (e) {
@@ -33,7 +29,7 @@ exports.upload = (req, res) => { // upload a new file
 
 };
 
-exports.deleteOne = (req, res) => { //delete files on project
+/*exports.deleteOne = (req, res) => { //delete files on project
   const id = req.params.id;
   const Project = db.project;
   File.findByPk(id).then(file => { 
@@ -74,6 +70,14 @@ exports.deleteOne = (req, res) => { //delete files on project
   }).catch(e => {
     res.status(299).send("error");
   });
+}*/
+
+exports.deleteOne = (req, res)=>{
+  const fileId = req.params.fileId;
+    File.destroy({ where: { id: fileId } }).then(file => {
+      if (file == 1) res.send("נמחק בהצלחה");
+      else res.status(299).send("לא נמצאו רשומות למחיקה");
+    }).catch(e => { res.status(299).send("שגיאה לא ידועה") });
 }
 
 exports.findByProject = (req, res) => { // find file by project Id

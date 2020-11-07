@@ -22,11 +22,9 @@ const { request } = require("express");
 //force is start database from new
 db.sequelize.sync({ force: true, }).then(() => {
 
-  const trends = require("./app/models/data/trend.js");
-  db.trend.bulkCreate(trends, { validate: true });
+  const faculty = require("./app/models/data/faculty.js");
+  db.faculty.bulkCreate(faculty, { validate: true });
 
-  const Statuses = require("./app/models/data/status.js");
-  db.status.bulkCreate(Statuses, { validate: true });
 
 
   const Account = require("./app/models/data/account.js");
@@ -35,8 +33,8 @@ db.sequelize.sync({ force: true, }).then(() => {
     const College = require("./app/models/data/college.js");
     db.college.bulkCreate(College, { validate: true });
 
-    const Teacher = require("./app/models/data/teacher");
-    db.teacher.bulkCreate(Teacher, {validate: true});
+    const Mentor = require("./app/models/data/mentor");
+    db.mentor.bulkCreate(Mentor, {validate: true});
 
     const Student = require("./app/models/data/student");
     db.student.bulkCreate(Student, {validate: true});
@@ -59,15 +57,11 @@ app.get("/", (req, res) => {
 
 require("./app/routes/turorial.routes")(app);
 require("./app/routes/account.routes.js")(app);
-require("./app/routes/trend.routes")(app);
 require("./app/routes/student.routes")(app);
 require("./app/routes/college.routes.js")(app);
-require("./app/routes/project.routes")(app);
-require("./app/routes/teacher.routes")(app);
-require("./app/routes/test.routes")(app);
 require("./app/routes/headFaculty.routes")(app);
 require("./app/routes/faculty.routes")(app);
-require("./app/routes/projectM.routes")(app);
+require("./app/routes/project.routes")(app);
 
 require("./app/routes/mentor.routes.js")(app);
 

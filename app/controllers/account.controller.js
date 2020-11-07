@@ -54,8 +54,8 @@ exports.create = async (req, res) => {
 // Find a single Tutorial with an id
 exports.login = (req, res) => {
 
-  const accountId = req.params.accountId;
-  const password = req.params.password;
+  const accountId = req.body.accountId;
+  const password = req.body.pass;
   Account.findOne({ where: { accountId: accountId } }).then(user => { // find user by id 
     if (user) { //if user is find
       const bcrypt = require('bcrypt');

@@ -24,19 +24,14 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 
-db.project = require("./project.model.js")(sequelize, Sequelize);
 db.file = require("./file.model.js")(sequelize, Sequelize);
 db.mentor = require("./mentor.model.js")(sequelize, Sequelize);
 db.faculty = require("./faculty.model.js")(sequelize, Sequelize);
 db.headFaculty = require("./headFaculty.model.js")(sequelize, Sequelize);
 db.student = require("./student.model.js")(sequelize, Sequelize);
 db.account = require("./account.model.js")(sequelize, Sequelize);
-db.projectM = require("./projectM.model.js")(sequelize, Sequelize);
+db.project = require("./project.model.js")(sequelize, Sequelize);
 db.college = require("./college.model.js")(sequelize, Sequelize);
-db.status = require("./status.model.js")(sequelize, Sequelize);
-db.trend = require("./trend.model.js")(sequelize, Sequelize);
-db.teacher = require("./teacher.model.js")(sequelize, Sequelize);
-db.test = require("./test.model.js")(sequelize, Sequelize);
 
 
 //forgien key 1:1
@@ -74,21 +69,7 @@ db.faculty.hasOne(db.headFaculty, {
   onDelete: "RESTRICT"
 });
 //******************************************************* */
-db.account.hasOne(db.teacher, {
-  foreignKey: {
-    allowNull: false,
-    unique: true,
-    name: "accountId"
-  },
-  onDelete:"CASCADE"
-});
-db.student.hasOne(db.project, {
-  foreignKey: {
-    allowNull: false,
-    unique: true,
-  },
-  onDelete:"CASCADE"
-});
+
 db.account.hasOne(db.college, {
   foreignKey: {
     allowNull: false,
@@ -97,32 +78,15 @@ db.account.hasOne(db.college, {
   },
   onDelete:"CASCADE"
 });
-db.project.hasOne(db.test, {
-  foreignKey: {
-    allowNull: false,
-    unique: true
-  },
-  onDelete:"RESTRICT"
-});
 
 //forgien key 1:n
 db.mentor.hasMany(db.student, {onDelete: "RESTRICT"});
 db.faculty.hasMany(db.student, {onDelete: "RESTRICT"});
-db.projectM.hasMany(db.student, {onDelete: "RESTRICT"});
-db.projectM.hasMany(db.file, {onDelete: "CASCADE"});
-db.mentor.hasMany(db.projectM, {onDelete: "RESTRICT"});
-
-db.teacher.hasMany(db.student, {onDelete: "RESTRICT"});
-db.college.hasMany(db.student, {onDelete: "CASCADE"});
-db.college.hasMany(db.teacher, {onDelete: "CASCADE"});
-db.trend.hasMany(db.student, {onDelete: "RESTRICT"});
+db.project.hasMany(db.student, {onDelete: "RESTRICT"});
 db.project.hasMany(db.file, {onDelete: "CASCADE"});
-db.status.hasMany(db.project, {
-  foreignKey: {
-    allowNull: false,    
-    defaultValue: 2
-  }
-});
+db.mentor.hasMany(db.project, {onDelete: "RESTRICT"});
+
+db.college.hasMany(db.student, {onDelete: "CASCADE"});
 
 
 
