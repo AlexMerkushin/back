@@ -74,15 +74,12 @@ exports.login = (req, res) => {
             case 'headFaculty':
               temp = db.headFaculty;
               break;
-            case 'teacher':
-              temp = db.teacher
-              break;
             case 'college':
               temp = db.college
               break;
           };
           if (temp) { // We had to import controller
-            temp.findOne({ where: { accountId: user.id } }).then(user2 => { 
+            temp.findOne({ where: { accountId: user.accountId } }).then(user2 => { 
               if (user2) { // user find in controller
                 res.status(298).send([
                   {
