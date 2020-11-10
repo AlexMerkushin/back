@@ -3,7 +3,7 @@ const fs = require('fs');
 const db = require("../models");
 const File = db.file
 
-exports.upload = (req, res) => { // upload a new file
+/*exports.upload = (req, res) => { // upload a new file
   File.create({
     Extension: req.file.mimetype,
     name: req.file.originalname,
@@ -29,7 +29,7 @@ exports.upload = (req, res) => { // upload a new file
 
 };
 
-/*exports.deleteOne = (req, res) => { //delete files on project
+exports.deleteOne = (req, res) => { //delete files on project
   const id = req.params.id;
   const Project = db.project;
   File.findByPk(id).then(file => { 
@@ -100,3 +100,26 @@ exports.getFileById = (req, res) => { // get file by project id + file id
   })
     .catch(e => { res.status(299).send("error!") });
 }
+
+exports.upload = (req, res) => { // upload a new file
+  File.create({
+    Extension: req.file.mimetype,
+    name: req.file.originalname,
+    file: req.file.buffer, // conver to blob file
+    projectId: req.body.projectId,
+    type: req.body.type
+  }, {
+    fields: ['id', 'Extension', 'name', 'type', 'createAt']
+}).then((file) => {
+    try {
+      // exit node.js app
+      res.status(201).send(file); // return data project
+    } catch (e) {
+      console.log(e);
+      res.status(299).send({ 'err': e });
+    }
+  }).catch(e => {
+    res.status(299).send(e);
+  })
+
+};
