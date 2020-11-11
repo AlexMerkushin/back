@@ -41,11 +41,42 @@ exports.findById = (req, res)=>{
 
 exports.uploadResume = (req, res) => { // upload a new file
   const accountId = req.params.accountId;
-  Mentor.findOne({where: {accountId: accountId}}).then(d=>{
-    d.update({
-      resumeExtension: req.file.mimetype,
-      resumeName: req.file.originalname,
-      resume: req.file.buffer // conver to blob file
-    }).then(res.send(d));
-    })
-  };
+  Mentor.findOne({where: {accountId: accountId}}).then(mentor=>{
+  mentor.update({
+    resumeExtension: req.file.mimetype,
+    resumeName: req.file.originalname,
+    resume: req.file.buffer // conver to blob file
+  },
+  )}).then((file) => {
+    try {
+      // exit node.js app
+      res.status(201).send("הצלחת"); // return data project
+    } catch (e) {
+      console.log(e);
+      res.status(299).send({ 'err': e });
+    }
+  }).catch(e => {
+    res.status(299).send(e);
+  })
+};
+
+exports.uploadCertificate = (req, res) => { // upload a new file
+  const accountId = req.params.accountId;
+  Mentor.findOne({where: {accountId: accountId}}).then(mentor=>{
+  mentor.update({
+    certificateExtension: req.file.mimetype,
+    certificateName: req.file.originalname,
+    certificate: req.file.buffer // conver to blob file
+  },
+  )}).then((file) => {
+    try {
+      // exit node.js app
+      res.status(201).send("הצלחת"); // return data project
+    } catch (e) {
+      console.log(e);
+      res.status(299).send({ 'err': e });
+    }
+  }).catch(e => {
+    res.status(299).send(e);
+  })
+};

@@ -4,8 +4,9 @@ module.exports = app=>{
   const fileWorker = require('../controllers/file.controller.js');
   var router = require("express").Router();
   router.post("/",upload.single("file"), fileWorker.upload);
-  router.delete("/:id", fileWorker.deleteOne)
-  router.get("/project/:id", fileWorker.findByProject);
-  router.get("/:id/:projectId", fileWorker.getFileById)
+  router.put("/:fileId", fileWorker.update);
+  router.delete("/:fileId", fileWorker.deleteOne);
+  router.get("/project/:projectId", fileWorker.findByProjectId);
+  router.get("/:fileId", fileWorker.findById);
   app.use('/api/file', router);
 }
