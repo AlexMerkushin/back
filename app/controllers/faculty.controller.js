@@ -20,6 +20,22 @@ exports.create = (req, res) => {// Create a faculty
     Faculty.update(req.body, {where:{id:facultyId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
   };
 
+
+  exports.deleteFaculty = (req, res)=> {
+    const facultyId = req.params.facultyId;
+    Faculty.destroy({where: {id: facultyId}}).then(d=>{
+        if (d)
+        {
+            res.send("נמחק");
+        }
+        else
+        {
+          res.send("לא נמצא")
+        }
+      }).catch(e=>{res.status(299).send(e)})
+};
+
+
   exports.findAllFaculties = (req, res)=> {
       Faculty.findAll().then(d=>{res.status(298).send(d)}).catch({msg: "error"})
   };
@@ -27,18 +43,4 @@ exports.create = (req, res) => {// Create a faculty
   exports.findByFacultyId = (req, res)=> {
       const facultyId = req.params.facultyId;
       Faculty.findOne({where: {id: facultyId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
-  };
-
-  exports.deleteFaculty = (req, res)=> {
-      const facultyId = req.params.facultyId;
-      Faculty.destroy({where: {id: facultyId}}).then(d=>{
-          if (d)
-          {
-              res.send("נמחק");
-          }
-          else
-          {
-            res.send("לא נמצא")
-          }
-        }).catch(e=>{res.status(299).send(e)})
   };

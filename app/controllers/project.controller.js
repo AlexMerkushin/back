@@ -20,10 +20,6 @@ exports.findAllProject = (req, res)=> {
     Project.findAll().then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }
 
-exports.findByProjectId = (req, res)=> {
-    const id = req.params.projectId;
-    Project.findOne({where: {id: id}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
-}
 
 exports.findByMentorId = (req, res)=> {
     const mentorAccountId = req.params.mentorAccountId;
@@ -31,7 +27,7 @@ exports.findByMentorId = (req, res)=> {
 }
 
 exports.findByProtectionDate = (req,res)=>{
-    const date = req.body.date;
+    const date = req.params.date;
     Project.findAll({where: sequelize.where(sequelize.fn('YEAR', sequelize.col('dateField')), date)}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }
 
@@ -41,4 +37,21 @@ exports.delete = (req, res) => { // delete project
       if (project == 1) res.send("נמחק בהצלחה");
       else res.status(299).send("לא נמצאו רשומות למחיקה");
     }).catch(e => { res.status(299).send("שגיאה לא ידועה") });
+  }
+
+
+  exports.findByProjectId = (req, res)=> {
+    const id = req.params.projectId;
+    Project.findOne({where: {id: id}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+}
+
+exports.findByAccountId = (req, res) =>{
+      const id = req.params.id;
+     Project.findAll({include: [{model: db.student, where: {accountId: id}, attributes: ['accountId'], required: true}, {model: db.file, attributes:{exclude:['file', 'projectId']}}]}).then(dd=>res.send(dd));
+  }
+
+  exports.findByHeadFacultyId = (req, res)=>
+  {
+      const id = req.params.id;
+      Project.findAll({include: [{model: db.student, where: {facultyId: id}, group: ['projectId']}, {model: db.file, attributes:{exclude:['password']}}]}).then(d=>{res.send(d)});
   }

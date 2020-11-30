@@ -30,14 +30,6 @@ exports.update = (req, res)=>{ //update the mentor
     Mentor.update(req.body, {where:{accountId:accountId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
 }
 
-exports.findFreelancer = (req, res)=> {
-    Mentor.findAll({where: {WorkLocation: {[Op.ne]: null}}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
-}
-
-exports.findById = (req, res)=>{
-    const accountId = req.params.accountId;
-    Mentor.findOne({where: {accountId: accountId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
-}
 
 exports.uploadResume = (req, res) => { // upload a new file
   const accountId = req.params.accountId;
@@ -60,6 +52,7 @@ exports.uploadResume = (req, res) => { // upload a new file
   })
 };
 
+
 exports.uploadCertificate = (req, res) => { // upload a new file
   const accountId = req.params.accountId;
   Mentor.findOne({where: {accountId: accountId}}).then(mentor=>{
@@ -80,3 +73,13 @@ exports.uploadCertificate = (req, res) => { // upload a new file
     res.status(299).send(e);
   })
 };
+
+
+exports.findFreelancer = (req, res)=> {
+    Mentor.findAll({where: {WorkLocation: {[Op.ne]: null}}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+}
+
+exports.findById = (req, res)=>{
+    const accountId = req.params.accountId;
+    Mentor.findOne({where: {accountId: accountId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+}

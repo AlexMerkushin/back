@@ -4,9 +4,11 @@ module.exports = app => {
     router.post("/", projects.create);
     router.put("/:projectId", projects.update);
     router.get("/", projects.findAllProject);
-    router.get("/:projectId", projects.findByProjectId);
     router.get("/mentor/:mentorAccountId", projects.findByMentorId);
-    router.get("/date/", projects.findByProtectionDate);
+    router.get("/date/:data", projects.findByProtectionDate);
     router.delete("/:projectId", projects.delete);
+    router.get("/:projectId", projects.findByProjectId);
+    router.get("/findByAccountId/:id", projects.findByAccountId);
+    router.get("/findByHeadFacultyId/:id", projects.findByHeadFacultyId);
     app.use('/api/projects', router);
   };

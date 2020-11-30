@@ -7,5 +7,5 @@ module.exports = app => {
     router.put("/accountId", headFaculries.update);
     router.get("/faculty/:facultyId", headFaculries.findByfacultyId);
     router.get("/:accountId", headFaculries.findById);
-    app.use('/api/headfaculries', router);
+    app.use('/api/headfaculties', router);
   };

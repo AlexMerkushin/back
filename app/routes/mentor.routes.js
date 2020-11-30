@@ -4,9 +4,9 @@ module.exports = app => {
     var router = require("express").Router();
     router.post("/", mentors.create);
     router.put("/:accountId", mentors.update);
-    router.get("/freelance", mentors.findFreelancer);
-    router.get("/:accountId", mentors.findById);
     router.put("/resume/:accountId", upload.single("file"), mentors.uploadResume);
     router.put("/certificate/:accountId", upload.single("file"), mentors.uploadCertificate);
+    router.get("/freelance", mentors.findFreelancer);
+    router.get("/:accountId", mentors.findById);
     app.use('/api/mentors', router);
   };
