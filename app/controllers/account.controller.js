@@ -38,14 +38,40 @@ exports.create = async (req, res) => {
     }).catch(e => { res.status(299).send(e) })
   }
   else {
-    await Account.create(account) // expanded account (call this function from other controller)
+    await Account.create(account).then(account => { // expanded account (call this function from other controller)
     const mail = require("./mail.controller.js");
     mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  " + pass); // send mail to new user with password
+    res.status(201).send(account);
+  })
+
   }
 }
 
 
 exports.update = (req, res) => {
+  const accountId = req.params.accountId;
+  const password = req.params.pass;
+  Account.findByPk(accountId).then(account => { //find by id 
+    if (account) { // if found it
+      const bcrypt = require('bcrypt');
+      bcrypt.compare(password, account.password, (err, data) => { // check the pasword
+        if (err) res.status(299).send("שגיאה לא ידועה" + err);
+        if (data) { // if data is true so password is good
+          account.update(req.body).then(() => { // update account
+            res.send("עודכן בהצלחה");
+          }).catch(() => {
+            res.status(299).send("שגיאה בעדכון");
+          })
+        }
+        else res.status(299).send("פרטי זיהוי שגויים");
+      })
+    }
+    else res.status(299).send("פרטי זיהוי שגויים");
+  }).catch(e => { res.status(298).send("שגיאה לא ידועה") });
+};
+
+
+exports.updatePass = (req, res) => {
   const accountId = req.params.accountId;
   const password = req.params.pass;
   Account.findByPk(accountId).then(account => { //find by id 

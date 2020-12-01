@@ -17,7 +17,7 @@ exports.create = (req, res) => {  //create a new student
     trendId: req.body.trendId
 };
 const Account = require("./account.controller.js");
- Account.create(req,res).then(()=>{ //new account
+ Account.create(req,res).then(d=>{ //new account
      Student.create(student) // new student
     .then((data)=>{
         res.status(201).send(data);

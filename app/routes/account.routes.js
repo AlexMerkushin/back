@@ -8,5 +8,6 @@ module.exports = app => {
   router.get("/:type", accounts.findAllByType);
   router.delete("/:accountId", accounts.delete);
   router.get('/user/:accountId', accounts.user);
+  router.put('/user/:accountId/:pass', accounts.updatePass);
   app.use('/api/accounts', router);
 };

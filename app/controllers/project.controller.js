@@ -8,7 +8,11 @@ exports.create = (req, res) => { // create a new project
         name: req.body.name,
         mentorAccountId: req.body.mentorAccountId
     };
-    Project.create(project).then(data => { res.status(201).send(data) }).catch(res.status(298))
+    const studentId = req.body.studentId
+    Project.create(project).then(data => { 
+        db.student.update(	{projectId: data.id}, {where:{accountId: studentId}});
+        res.status(201).send(data) 
+    }).catch(res.status(298))
 };
 
 exports.update = (req, res)=>{ //update the mentor 
