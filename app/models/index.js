@@ -27,7 +27,7 @@ db.sequelize = sequelize;
 db.file = require("./file.model.js")(sequelize, Sequelize);
 db.mentor = require("./mentor.model.js")(sequelize, Sequelize);
 db.faculty = require("./faculty.model.js")(sequelize, Sequelize);
-db.headFaculty = require("./headFaculty.model.js")(sequelize, Sequelize);
+//db.headFaculty = require("./headFaculty.model.js")(sequelize, Sequelize);
 db.student = require("./student.model.js")(sequelize, Sequelize);
 db.account = require("./account.model.js")(sequelize, Sequelize);
 db.project = require("./project.model.js")(sequelize, Sequelize);
@@ -36,13 +36,11 @@ db.college = require("./college.model.js")(sequelize, Sequelize);
 
 //forgien key 1:1
 
-db.account.hasOne(db.headFaculty, {
+db.account.hasOne(db.faculty, {
   foreignKey: {
-    allowNull: false,
-    unique: true,
     name: "accountId"
   },
-  onDelete:"CASCADE"
+  onDelete:"RESTRICT"
 });
 
 db.account.hasOne(db.student, {
@@ -61,13 +59,13 @@ db.account.hasOne(db.mentor, {
   },
   onDelete:"CASCADE"
 });
-db.faculty.hasOne(db.headFaculty, {
+/*db.faculty.hasOne(db.headFaculty, {
   foreignKey: {
     allowNull:false,
     unique: true
   },
   onDelete: "RESTRICT"
-});
+});*/
 //******************************************************* */
 
 db.account.hasOne(db.college, {
@@ -80,6 +78,7 @@ db.account.hasOne(db.college, {
 });
 
 //forgien key 1:n
+//db.account.hasMany(db.faculty, {onDelete: "RESTRICT"});
 db.mentor.hasMany(db.student, {onDelete: "RESTRICT"});
 db.faculty.hasMany(db.student, {onDelete: "RESTRICT"});
 db.project.hasMany(db.student, {onDelete: "RESTRICT"});

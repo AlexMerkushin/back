@@ -59,7 +59,7 @@ require("./app/routes/turorial.routes")(app);
 require("./app/routes/account.routes.js")(app);
 require("./app/routes/student.routes")(app);
 require("./app/routes/college.routes.js")(app);
-require("./app/routes/headFaculty.routes")(app);
+//require("./app/routes/headFaculty.routes")(app);
 require("./app/routes/faculty.routes")(app);
 require("./app/routes/project.routes")(app);
 

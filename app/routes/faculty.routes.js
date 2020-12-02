@@ -5,6 +5,7 @@ module.exports = app=>{
     router.put("/:facultyId", faculties.update);
     router.delete("/:facultyId", faculties.deleteFaculty);
     router.get("/", faculties.findAllFaculties);
+    router.get("/headFaculty/:accountId", faculties.findByHeadFacultyId);
     router.get("/:facultyId", faculties.findByFacultyId);
     app.use('/api/faculties', router);
 }
