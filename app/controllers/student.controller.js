@@ -20,7 +20,9 @@ const Account = require("./account.controller.js");
  Account.create(req,res).then(d=>{ //new account
      Student.create(student) // new student
     .then((data)=>{
-        res.status(201).send(data);
+        db.account.findByPk(data.accountId, { include: [{model: db.student}], attributes:{exclude:['password']} }).then(user => {
+            res.send(user)
+          })
     })
     .catch(err => {
         res.status(299).send({err});

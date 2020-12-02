@@ -41,7 +41,6 @@ exports.create = async (req, res) => {
     await Account.create(account).then(account => { // expanded account (call this function from other controller)
     const mail = require("./mail.controller.js");
     mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  " + pass); // send mail to new user with password
-    res.status(201).send(account);
   })
 
   }

@@ -15,6 +15,9 @@ const Account = require("./account.controller.js");
  Account.create(req,res).then(()=>{ //new account
      Mentor.create(mentor) // new mentor
     .then((data)=>{
+      db.account.findByPk(data.accountId, { include: [{model: db.mentor}], attributes:{exclude:['password']} }).then(user => {
+        res.send(user)
+      })
         res.status(201).send(data);
     })
     .catch(err => {
