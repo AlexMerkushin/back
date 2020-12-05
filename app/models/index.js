@@ -79,7 +79,7 @@ db.account.hasOne(db.college, {
 
 //forgien key 1:n
 //db.account.hasMany(db.faculty, {onDelete: "RESTRICT"});
-db.mentor.hasMany(db.student, {onDelete: "RESTRICT"});
+//db.mentor.hasMany(db.student, {onDelete: "RESTRICT"});
 db.faculty.hasMany(db.student, {onDelete: "RESTRICT"});
 db.project.hasMany(db.student, {onDelete: "RESTRICT"});
 db.project.hasMany(db.file, {onDelete: "CASCADE"});

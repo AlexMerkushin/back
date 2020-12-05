@@ -22,31 +22,25 @@ const { request } = require("express");
 //force is start database from new
 db.sequelize.sync({ force: true, }).then(() => {
 
-  const faculty = require("./app/models/data/faculty.js");
-  db.faculty.bulkCreate(faculty, { validate: true });
-
-
-
   const Account = require("./app/models/data/account.js");
   db.account.bulkCreate(Account, { validate: true })
-  .then(()=>{
-    const College = require("./app/models/data/college.js");
-    db.college.bulkCreate(College, { validate: true });
+    .then(() => {
 
-    const Mentor = require("./app/models/data/mentor");
-    db.mentor.bulkCreate(Mentor, {validate: true});
+      const faculty = require("./app/models/data/faculty.js");
+      db.faculty.bulkCreate(faculty, { validate: true });
+      
+      const College = require("./app/models/data/college.js");
+      db.college.bulkCreate(College, { validate: true });
 
-    const Student = require("./app/models/data/student");
-    db.student.bulkCreate(Student, {validate: true});
-    
-  })
+      const Mentor = require("./app/models/data/mentor");
+      db.mentor.bulkCreate(Mentor, { validate: true });
 
-
-
-
- 
+      const Student = require("./app/models/data/student");
+      db.student.bulkCreate(Student, { validate: true });
 
 
+      
+    })
 })
 
 
@@ -67,7 +61,7 @@ require("./app/routes/mentor.routes.js")(app);
 
 require("./app/routes/file.routes")(app);
 // set port, listen for requests
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 801;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

@@ -8,7 +8,7 @@ exports.create = (req, res) => { // create a new project
         name: req.body.name,
         mentorAccountId: req.body.mentorAccountId
     };
-    const studentId = req.body.studentId
+    const studentId = req.body.studentId;
     Project.create(project).then(data => { 
         db.student.update(	{projectId: data.id}, {where:{accountId: studentId}});
         res.status(201).send(data) 
@@ -50,8 +50,8 @@ exports.delete = (req, res) => { // delete project
 }
 
 exports.findByAccountId = (req, res) =>{
-      const id = req.params.id;
-     Project.findAll({include: [{model: db.student, where: {accountId: id}, attributes: ['accountId'], required: true}, {model: db.file, attributes:{exclude:['file', 'projectId']}}]}).then(dd=>res.send(dd));
+      const id = req.params.accountId;
+     Project.findOne({include: [{model: db.student, where: {accountId: id}, attributes: ['accountId'], required: true}, {model: db.file, attributes:{exclude:['file', 'projectId']}}]}).then(dd=>res.send(dd));
   }
 
   exports.findByHeadFacultyId = (req, res)=>

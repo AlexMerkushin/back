@@ -134,7 +134,7 @@ exports.delete = (req, res) => { // delete account
 
 exports.user = (req, res) => {
   const accountId = req.params.accountId;
-  Account.findByPk(accountId, { include: [{model: db.student}, {model: db.mentor}, {model: db.headFaculty}], attributes:{exclude:['password']} }).then(user => {
+  Account.findByPk(accountId, { include: [{model: db.student}, {model: db.mentor}], attributes:{exclude:['password']} }).then(user => {
     res.send(user)
   })
 }
