@@ -43,8 +43,8 @@ Student.findAll({where: {facultyId: facultyId}}).then(d=>{res.status(298).send(d
 }
 
 exports.findByProjectId = (req, res) => {
-    const projectMId = req.params.projectId;
-    Student.findAll({where: {projectMId: projectMId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+    const projectId = req.params.projectId;
+    Student.findAll({where: {projectId: projectId}}, { include: [{model: db.account}], attributes:{exclude:['password']} }).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }
 
 exports.findByAccountId = (req, res)=>{//
