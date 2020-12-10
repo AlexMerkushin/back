@@ -36,7 +36,7 @@ db.college = require("./college.model.js")(sequelize, Sequelize);
 
 //forgien key 1:1
 
-db.account.hasOne(db.faculty, {
+db.faculty.belongsTo(db.account, {
   foreignKey: {
     name: "accountId"
   },

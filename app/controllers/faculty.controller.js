@@ -44,9 +44,9 @@ exports.create = (req, res) => {// Create a faculty
 };
 
 
-  exports.findAllFaculties = (req, res)=> {
-      Faculty.findAll().then(d=>{res.status(298).send(d)}).catch({msg: "error"})
-  };
+exports.findAllFaculties = (req, res)=> {
+  Faculty.findAll({include: [{model: db.account, attributes: { exclude: ["password"] }}], attributes:['id', 'name']}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+};
 
   exports.findByHeadFacultyId = (req, res)=>{
     const accountId = req.params.accountId;
