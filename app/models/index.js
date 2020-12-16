@@ -43,6 +43,7 @@ db.faculty.belongsTo(db.account, {
   onDelete:"RESTRICT"
 });
 
+
 db.account.hasOne(db.student, {
   foreignKey: {
     allowNull: false,
@@ -51,6 +52,7 @@ db.account.hasOne(db.student, {
   },
   onDelete:"CASCADE"
 });
+
 db.account.hasOne(db.mentor, {
   foreignKey: {
     allowNull: false,

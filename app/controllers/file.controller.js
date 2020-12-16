@@ -11,11 +11,12 @@ exports.upload = (req, res) => { // upload a new file
     file: req.file.buffer, // conver to blob file
     projectId: req.body.projectId,
     type: req.body.type
-  },
+  },{fields: ['id', 'Extension', 'name', 'projectId', 'type']}
   ).then((file) => {
     try {
       // exit node.js app
-      res.status(201).send(file); // return data project
+      //res.status(201).send(file); // return data project
+      File.findByPk(file.id, {attributes: { exclude: ["file", "projectId"] }}).then(file=>res.status(201).send(file))
     } catch (e) {
       console.log(e);
       res.status(299).send({ 'err': e });

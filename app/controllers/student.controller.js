@@ -21,7 +21,7 @@ const Account = require("./account.controller.js");
      Student.create(student) // new student
     .then((data)=>{
         db.account.findByPk(data.accountId, { include: [{model: db.student}], attributes:{exclude:['password']} }).then(user => {
-            res.send(user)
+            res.status(201).send(user)
           })
     })
     .catch(err => {

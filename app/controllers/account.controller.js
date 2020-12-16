@@ -30,7 +30,7 @@ exports.create = async (req, res) => {
     Account.create(account, { attributes: ['accountId', 'firstName', 'lastName', 'email', 'sex', 'addres', 'phone'] }).then(account => {
       try {
         const mail = require("./mail.controller.js");
-        mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  " + pass); // send mail with new password to account
+      //  mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  " + pass); // send mail with new password to account
         res.status(201).send(account);
       } catch (error) {
         res.status(299).send("שגיאה בשליחת מייל");
@@ -40,7 +40,7 @@ exports.create = async (req, res) => {
   else {
     await Account.create(account).then(account => { // expanded account (call this function from other controller)
     const mail = require("./mail.controller.js");
-    mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  " + pass); // send mail to new user with password
+   // mail.sendMail(account.email, "הרשמתך להט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  " + pass); // send mail to new user with password
   })
 
   }
@@ -94,7 +94,7 @@ exports.updatePass = (req, res) => {
 
 
 exports.findAll = (req, res) => {
-  Account.findAll({ attributes: { exclude: ["password"] } }).then(account => {
+  Account.findAll({include:[{model: db.student}], attributes: { exclude: ["password"] } }).then(account => {
     res.status(298).send(account);
   }).catch(e => {
     res.status(299).send(שגיאה);
