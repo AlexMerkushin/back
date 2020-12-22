@@ -66,5 +66,5 @@ exports.studentOfFaculty = (req, res) =>{
         {include:[
             {model: db.student, group:['facultyId']}]}).then(ee => {
                 res.send(ee)
-            }).catch(e)
+            })
 }

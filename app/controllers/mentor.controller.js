@@ -63,6 +63,36 @@ exports.uploadCertificate = (req, res) => { // upload a new file
   })
 };
 
+exports.getResume = (req, res) => { // get file by file id
+  const id = req.params.id;
+  Mentor.findOne({ where: { accountId: id} }).then(file => {
+    if (file) {
+      var fileData = new Buffer.from(resume.file);// write buffer to file
+      res.write(fileData);
+      res.end();
+    }
+    else
+      res.status(299).send("0 rows");
+
+  })
+    .catch(e => { res.status(299).send("error!") });
+}
+
+exports. getCertificate = (req, res) => { // get file by file id
+  const id = req.params.id;
+  Mentor.findOne({ where: { accountId: id} }).then(file => {
+    if (file) {
+      var fileData = new Buffer.from(certificate.file);// write buffer to file
+      res.write(fileData);
+      res.end();
+    }
+    else
+      res.status(299).send("0 rows");
+
+  })
+    .catch(e => { res.status(299).send("error!") });
+}
+
 
 exports.findFreelancer = (req, res)=> {
     Mentor.findAll({where: {WorkLocation: {[Op.ne]: null}}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
