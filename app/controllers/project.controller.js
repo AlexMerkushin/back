@@ -27,8 +27,8 @@ exports.findAllProject = (req, res) => {
 
 
 exports.findByMentorId = (req, res) => {
-    const mentorAccountId = req.params.mentorAccountId;
-    Project.findAll({ where: { 	mentorAccountId: mentorAccountId } }).then(d => { res.status(298).send(d) }).catch({ msg: "error" })
+    const accountId = req.params.accountId;
+    Project.findAll({ where: { 	mentorAccountId: accountId }, include: [{ model: db.student, attributes: { exclude: ["projectId"] }, group: ['projectId'] }, { model: db.file, attributes: { exclude: ["file", "projectId"] } }] }).then(d => { res.send(d) }).catch({ msg: "error" })
 }
 
 exports.findByProtectionDate = (req, res) => {
@@ -51,11 +51,15 @@ exports.findByProjectId = (req, res) => {
 }
 
 exports.findByAccountId = (req, res) => {
-    const id = req.params.accountId;
-    Project.findOne({ include: [{ model: db.student, where: { accountId: id }, attributes: ['accountId'], required: true }, { model: db.file, attributes: { exclude: ['file', 'projectId'] } }] }).then(dd => res.send(dd));
+    const accountId = req.params.accountId;
+    Project.findOne({ include: [{ model: db.student, where: { projectId: accountId }, attributes: ['accountId'], required: true, group: ['facultyId'] }, { model: db.file, attributes: { exclude: ['file', 'projectId'] } }] }).then(dd => res.send(dd));
 }
 
 exports.findByHeadFacultyId = (req, res) => {
-    const id = req.params.id;
-    Project.findAll({ include: [{ model: db.faculty, where: { accountId: id }, group: ['projectId'] }, { model: db.file, attributes: { exclude: ['password'] } }] }).then(d => { res.send(d) });
+    const accountId = req.params.accountId;
+    db.faculty.findOne({where: {accountId: accountId}}).then(result=>{
+      //  res.send(result);
+     Project.findAll({ include: [{model: db.student, where: {facultyId: result.id} }, { model: db.file }] }).then(d => { res.send(d) });
+    })
+    
 }

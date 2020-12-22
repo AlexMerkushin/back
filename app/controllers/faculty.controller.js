@@ -7,9 +7,7 @@ exports.create = (req, res) => {// Create a faculty
       name: req.body.name,
       accountId: req.body.accountId
     };
-    const Account = require("./account.controller.js");
-    Account.create(req,res).then(()=>{
-    Faculty.create(faculty)
+    Faculty.upsert(faculty)
       .then(data => {
         db.account.findByPk(data.accountId, { include: [{model: db.faculty}], attributes:{exclude:['password']} }).then(user => {
           res.send(user)
@@ -18,9 +16,6 @@ exports.create = (req, res) => {// Create a faculty
       .catch(err => {
         res.status(299).send("שגיאה בהוספת נתונים");
       });
-    }).catch(err => {
-      res.status(299).send({err});
-    });
   };
 
   exports.update = (req, res)=>{ //update the faculty 

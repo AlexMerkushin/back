@@ -38,7 +38,8 @@ db.college = require("./college.model.js")(sequelize, Sequelize);
 
 db.faculty.belongsTo(db.account, {
   foreignKey: {
-    name: "accountId"
+    name: "accountId",
+    unique: true,
   },
   onDelete:"RESTRICT"
 });

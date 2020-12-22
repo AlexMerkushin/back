@@ -4,6 +4,36 @@ const Account = db.account;
 const Op = db.Sequelize.Op;
 
 
+exports.createUser = async (req, res, next)=>{
+  var pass = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$*';
+  var charactersLength = characters.length;
+  var length = Math.floor(Math.random() * 10) + 6;
+  for (var i = 0; i < length; i++) {
+    pass += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+
+  const account = {
+    accountId: req.body.accountId,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    sex: req.body.sex,
+    password: pass,
+    phone: req.body.phone,
+    type: req.body.type,
+    addres: req.body.addres
+  };
+
+  try {
+    await Account.upsert(account);
+    next();
+  } catch (error) {
+    res.status(404).send("canot create new account");
+  }
+
+}
 
 exports.create = async (req, res) => {
   //create random password
@@ -94,7 +124,7 @@ exports.updatePass = (req, res) => {
 
 
 exports.findAll = (req, res) => {
-  Account.findAll({include:[{model: db.student}], attributes: { exclude: ["password"] } }).then(account => {
+  Account.findAll({include:[{model: db.student, attributes: ['projectId', 'facultyId', 'gradeProject', 'finishDate']}, {model: db.mentor, attributes: ['Education', 'WorkLocation']}], attributes: { exclude: ["password"] } }).then(account => {
     res.status(298).send(account);
   }).catch(e => {
     res.status(299).send(שגיאה);
@@ -109,7 +139,14 @@ exports.login = (req, res) => {
     const bcrypt = require('bcrypt');
     bcrypt.compare(password, user.password, (err, data) => { // Compare password from form to real password
       if (err) res.status(404).send("שגיאה לא ידועה" + err);
-      else if (data) res.send(user);
+      else if (data) {
+        const jwt = require('jsonwebtoken');
+        const token = jwt.sign({
+          accountId: user.accountId,
+          type: user.type
+        }, 'access_token', {expiresIn: "1H"})
+        res.send({meesege: "succses", token});
+      }
       else res.status(401).send("bad pass")
     })
   })
@@ -133,8 +170,20 @@ exports.delete = (req, res) => { // delete account
 }
 
 exports.user = (req, res) => {
-  const accountId = req.params.accountId;
-  Account.findByPk(accountId, { include: [{model: db.student}, {model: db.mentor}], attributes:{exclude:['password']} }).then(user => {
-    res.send(user)
-  })
+  try {
+    const jwt = require('jsonwebtoken');
+    const token = req.headers.authorization.split(' ')[1];
+    const data = jwt.verify(token, 'access_token');
+    Account.findByPk(data.accountId).then(d=>{res.send({user: d})});
+  } catch (error) {
+    res.status(404).send("auth faild");
+  }
+}
+
+exports.findById = (req, res) =>{
+  try {
+    Account.findByPk(req.params.accountId, {include:[{model: db.student}], attributes: { exclude: ["password"] }}).then(d=>{res.send(d)});
+  } catch (error) {
+    res.status(404).send("auth faild");
+  }
 }

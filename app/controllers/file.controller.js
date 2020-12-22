@@ -11,7 +11,7 @@ exports.upload = (req, res) => { // upload a new file
     file: req.file.buffer, // conver to blob file
     projectId: req.body.projectId,
     type: req.body.type
-  },{fields: ['id', 'Extension', 'name', 'projectId', 'type']}
+  }
   ).then((file) => {
     try {
       // exit node.js app
@@ -35,7 +35,7 @@ exports.update = (req, res)=>{ //update the file
 
 exports.findByProjectId = (req, res) => { // find file by project Id
   const id = req.params.projectId;
-  File.findAll({ where: { projectId: id } }).then(d => { res.status(298).send(d) }).catch(e => { res.status(299).send(e) });
+  File.findAll({ where: { projectId: id } }).then(d => { res.status(200).send(d) }).catch(e => { res.status(299).send(e) });
 }
 
 
@@ -48,7 +48,7 @@ exports.deleteOne = (req, res)=>{
 }
 
 
-exports.findById = (req, res) => { // get file by project id + file id
+exports.findById = (req, res) => { // get file by file id
   const id = req.params.fileId;
   File.findOne({ where: { id: id} }).then(file => {
     if (file) {

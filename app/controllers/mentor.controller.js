@@ -4,29 +4,15 @@ const Mentor = db.mentor;
 const Op = db.Sequelize.Op;
 
 
-exports.create = (req, res) => {  //create a new mentor
+exports.create = async (req, res, next) => {  //create a new mentor
     
-    const mentor={
-    accountId: req.body.accountId,
-    Education: req.body.education,
-    WorkLocation: req.body.workLocation
-};
-const Account = require("./account.controller.js");
- Account.create(req,res).then(()=>{ //new account
-     Mentor.create(mentor) // new mentor
-    .then((data)=>{
-      db.account.findByPk(data.accountId, { include: [{model: db.mentor}], attributes:{exclude:['password']} }).then(user => {
-        res.send(user)
-      })
-        res.status(201).send(data);
-    })
-    .catch(err => {
-        res.status(299).send({err});
-      });
- }).catch(err => {
-    res.status(299).send({err});
-  });
-}
+  try {
+    await Mentor.upsert(req.body.mentor);
+    next();
+  } catch (error) {
+    res.status(404).send("canot create new account");
+  }
+    }
 
 exports.update = (req, res)=>{ //update the mentor 
     const accountId = req.params.accountId;
