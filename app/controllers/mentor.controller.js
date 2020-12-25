@@ -100,5 +100,5 @@ exports.findFreelancer = (req, res)=> {
 
 exports.findById = (req, res)=>{
     const accountId = req.params.accountId;
-    Mentor.findOne({where: {accountId: accountId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
+    Mentor.findOne({where: {accountId: accountId}, attributes: ['Education', 'WorkLocation', 'resumeName', 'certificateName']}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
 }

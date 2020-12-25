@@ -124,7 +124,7 @@ exports.updatePass = (req, res) => {
 
 
 exports.findAll = (req, res) => {
-  Account.findAll({include:[{model: db.student, attributes: ['projectId', 'facultyId', 'gradeProject', 'finishDate']}, {model: db.mentor, attributes: ['Education', 'WorkLocation']}], attributes: { exclude: ["password"] } }).then(account => {
+  Account.findAll({include:[{model: db.student, attributes: ['projectId', 'facultyId', 'gradeProject', 'finishDate']}, {model: db.mentor, attributes: ['Education', 'WorkLocation', 'resumeName', 'certificateName']}], attributes: { exclude: ["password"] } }).then(account => {
     res.status(298).send(account);
   }).catch(e => {
     res.status(299).send(שגיאה);
@@ -174,7 +174,7 @@ exports.user = (req, res) => {
     const jwt = require('jsonwebtoken');
     const token = req.headers.authorization.split(' ')[1];
     const data = jwt.verify(token, 'access_token');
-    Account.findByPk(data.accountId).then(d=>{res.send({user: d})});
+    Account.findByPk(data.accountId, {include: [{model: db.student, attributes: { exclude: ['password']}}]}).then(d=>{res.send({user: d})});
   } catch (error) {
     res.status(404).send("auth faild");
   }

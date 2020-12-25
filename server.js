@@ -59,7 +59,7 @@ require("./app/routes/mentor.routes.js")(app);
 
 require("./app/routes/file.routes")(app);
 // set port, listen for requests
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 801;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

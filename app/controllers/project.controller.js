@@ -47,12 +47,13 @@ exports.delete = (req, res) => { // delete project
 
 exports.findByProjectId = (req, res) => {
     const id = req.params.projectId;
-    Project.findOne({ where: { id: id } }).then(d => { res.status(298).send(d) }).catch({ msg: "error" })
+    Project.findByPk(id, {include: [{model: db.student }, { model: db.file }]}).then(d => { res.status(298).send(d) }).catch({ msg: "error" })
 }
 
 exports.findByAccountId = (req, res) => {
     const accountId = req.params.accountId;
-    Project.findOne({ include: [{ model: db.student, where: { projectId: accountId }, attributes: ['accountId'], required: true, group: ['facultyId'] }, { model: db.file, attributes: { exclude: ['file', 'projectId'] } }] }).then(dd => res.send(dd));
+    Project.findOne({ include: [{ model: db.student, where: { accountId: accountId }, attributes: ['accountId'], required: true }, { model: db.file, attributes: { exclude: ['file', 'projectId'] } }] }).then(dd => res.send(dd));
+
 }
 
 exports.findByHeadFacultyId = (req, res) => {

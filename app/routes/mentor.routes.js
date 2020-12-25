@@ -9,7 +9,7 @@ module.exports = app => {
     router.put("/certificate/:accountId", upload.single("file"), mentors.uploadCertificate);
     router.get("/freelance", mentors.findFreelancer);
     router.get("/:accountId", mentors.findById);
-    router.get("/getResume", mentors.getResume);
-    router.get("/getCertificate", mentors.getCertificate);
+    router.get("/getResume/:id", mentors.getResume);
+    router.get("/getCertificate/:id", mentors.getCertificate);
     app.use('/api/mentors', router);
   };

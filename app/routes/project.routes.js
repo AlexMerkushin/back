@@ -7,7 +7,7 @@ module.exports = app => {
     router.get("/mentor/:accountId", projects.findByMentorId);
     //router.get("/date/:data", projects.findByProtectionDate);
     router.delete("/:projectId", projects.delete);
-    //router.get("/:projectId", projects.findByProjectId);
+    router.get("/:projectId", projects.findByProjectId);
     router.get("/student/:accountId", projects.findByAccountId);
     router.get("/headFaculty/:accountId", projects.findByHeadFacultyId);
     app.use('/api/projects', router);
