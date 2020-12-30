@@ -16,7 +16,7 @@ module.exports = [
         lastName: "קויפמן",
         email: "Shir.koyfman@gmail.com",
         sex: "נקבה",
-        password: "654321",
+        password: "123456",
         phone: "0509536621",
         type: "headFaculty"
     },
@@ -26,7 +26,7 @@ module.exports = [
         lastName: "כהן",
         email: "yosi@gmail.com",
         sex: "זכר",
-        password: "753",
+        password: "123456",
         phone: "0509521422",
         type: "worker"
     },
@@ -36,7 +36,7 @@ module.exports = [
         lastName: "lembobith",
         email: "moshe@gmail.com",
         sex: "זכר",
-        password: "951",
+        password: "123456",
         phone: "0509536652",
         type: "mentor"
     },
@@ -46,7 +46,7 @@ module.exports = [
         lastName: "cohrn",
         email: "orit@gmail.com",
         sex: "נקבה",
-        password: "121",
+        password: "123456",
         phone: "0509536622",
         type: "boss"
     },
@@ -57,7 +57,7 @@ module.exports = [
         lastName: "טימור",
         email: "bar@gmail.com",
         sex: "זכר",
-        password: "1281",
+        password: "123456",
         phone: "0509536632",
         type: "headFaculty"
     },
@@ -67,7 +67,7 @@ module.exports = [
         lastName: "בלאט",
         email: "tamir1-5@gmail.com",
         sex: "זכר",
-        password: "1291",
+        password: "123456",
         phone: "0509416632",
         type: "headFaculty"
     },
@@ -77,7 +77,7 @@ module.exports = [
         lastName: "אבדיה",
         email: "tamir@gmail.com",
         sex: "זכר",
-        password: "1291",
+        password: "123456",
         phone: "0509526632",
         type: "headFaculty"
     },
@@ -87,7 +87,7 @@ module.exports = [
         lastName: "גדות",
         email: "gal@gmail.com",
         sex: "נקבה",
-        password: "ggg",
+        password: "123456",
         phone: "0509534632",
         type: "headFaculty"
     },
@@ -97,8 +97,7 @@ module.exports = [
         lastName: "לב",
         email: "leah@gmail.com",
         sex: "נקבה",
-        password: "lea",
-        phone: "0509514232",
+        password: "123456", phone: "0509514232",
         type: "headFaculty"
     },
     {
@@ -107,7 +106,7 @@ module.exports = [
         lastName: "גורדן",
         email: "michal@gmail.com",
         sex: "זכר",
-        password: "hfg",
+        password: "123456",
         phone: "0509507232",
         type: "headFaculty"
     },
@@ -117,7 +116,7 @@ module.exports = [
         lastName: "גיימס",
         email: "lebron@gmail.com",
         sex: "זכר",
-        password: "hfg",
+        password: "123456",
         phone: "0509507111",
         type: "headFaculty"
     },

@@ -53,8 +53,7 @@ exports.findById = (req, res) => { // get file by file id
   File.findOne({ where: { id: id} }).then(file => {
     if (file) {
       var fileData = new Buffer.from(file.file);// write buffer to file
-      res.write(fileData);
-      res.end();
+      res.download(fileData)
     }
     else
       res.status(299).send("0 rows");

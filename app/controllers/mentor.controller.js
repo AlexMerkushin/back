@@ -68,8 +68,7 @@ exports.getResume = (req, res) => { // get file by file id
   Mentor.findOne({ where: { accountId: id} }).then(file => {
     if (file) {
       var fileData = new Buffer.from(resume.file);// write buffer to file
-      res.write(fileData);
-      res.end();
+      res.download(fileData);
     }
     else
       res.status(299).send("0 rows");
@@ -83,8 +82,7 @@ exports. getCertificate = (req, res) => { // get file by file id
   Mentor.findOne({ where: { accountId: id} }).then(file => {
     if (file) {
       var fileData = new Buffer.from(certificate.file);// write buffer to file
-      res.write(fileData);
-      res.end();
+      res.download(fileData)
     }
     else
       res.status(299).send("0 rows");
