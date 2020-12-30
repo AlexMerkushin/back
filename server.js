@@ -29,9 +29,6 @@ db.sequelize.sync({ force: true, }).then(() => {
       const faculty = require("./app/models/data/faculty.js");
       db.faculty.bulkCreate(faculty, { validate: true });
       
-      const College = require("./app/models/data/college.js");
-      db.college.bulkCreate(College, { validate: true });
-
       const Mentor = require("./app/models/data/mentor");
       db.mentor.bulkCreate(Mentor, { validate: true });
 
@@ -44,14 +41,11 @@ db.sequelize.sync({ force: true, }).then(() => {
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "the API project mahat;" });
 });
 
-require("./app/routes/turorial.routes")(app);
 require("./app/routes/account.routes.js")(app);
-require("./app/routes/student.routes")(app);
-require("./app/routes/college.routes.js")(app);
-//require("./app/routes/headFaculty.routes")(app);
+require("./app/routes/headFaculty.routes")(app);
 require("./app/routes/faculty.routes")(app);
 require("./app/routes/project.routes")(app);
 
