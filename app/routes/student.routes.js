@@ -9,5 +9,7 @@ module.exports = app => {
     router.get("/findOne/:accountId", students.findByAccountId);
     router.put("/:accountId1/:accountId2/:accountId3", students.addStudentToProject);
     router.get("/stat/faculty", students.studentOfFaculty);
+    router.get("/stat/student", students.stat);
+    router.get('/stat/:facultyId', students.statByFaculty);
     app.use('/api/students', router);
   };
