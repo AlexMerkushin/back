@@ -50,7 +50,7 @@ require("./app/routes/faculty.routes")(app);
 require("./app/routes/project.routes")(app);
 
 require("./app/routes/mentor.routes.js")(app);
-
+require("./app/routes/student.routes")(app);
 require("./app/routes/file.routes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 801;

@@ -16,7 +16,7 @@ module.exports= (sequelize, Sequelize)=>{
                 min:0,
                 max: 100
             },
-            defaultValue: 0
+            defaultValue: null
         },
     })
     return Student;

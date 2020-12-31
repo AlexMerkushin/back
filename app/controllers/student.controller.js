@@ -27,10 +27,10 @@ exports.findByFacultyId = (req, res) => {
         res.send(result);
     })
     
-   db.faculty.findOne({where: {accountId: facultyId}, attributes: ['accountId']}).then
+   db.faculty.findByPk(accountId, {where: {accountId: facultyId}, attributes: ['accountId']}).then
 Student.findAll({where: {facultyId: facultyId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
-
 */
+
 db.faculty.findOne({where:{accountId: accountId}, attributes:['id']}).then(result=>{
     db.account.findAll({include: [{model: db.student, where: {facultyId: result.id}}], attributes: { exclude: ["password"] }}).then(result=>{
         res.send(result);
