@@ -110,8 +110,8 @@ stat = (req, res) => {
 
 
 exports.statByFaculty = (req, res) => {
-    const facultyId = req.params.facultyId;
-    db.faculty.findByPk(facultyId, {
+    const accountId = req.params.accountId;
+    db.faculty.findOne({ where:{ accountId: accountId}, attributes:['id', 'name'], raw: true,
         include: [{
             model: db.student,
             attributes: [
@@ -122,7 +122,7 @@ exports.statByFaculty = (req, res) => {
                 [sequelize.fn('min', sequelize.col('gradeProject')), 'minGrade'],
                 [sequelize.fn('max', sequelize.col('gradeProject')), 'maxGrade'],
             ]
-        }, { model: db.account, attributes: { exclude: ["password"] } }]
+        }]
     }).then(result => {
         res.send(result);
     }).catch(error => {
