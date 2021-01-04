@@ -100,27 +100,14 @@ exports.update = (req, res) => {
 };
 
 
-exports.updatePass = (req, res) => {
+exports.updateAccount = (req, res) => {
   const accountId = req.params.accountId;
-  const password = req.params.pass;
-  Account.findByPk(accountId).then(account => { //find by id 
-    if (account) { // if found it
-      const bcrypt = require('bcrypt');
-      bcrypt.compare(password, account.password, (err, data) => { // check the pasword
-        if (err) res.status(299).send("שגיאה לא ידועה" + err);
-        if (data) { // if data is true so password is good
-          account.update(req.body).then(() => { // update account
-            res.send("עודכן בהצלחה");
-          }).catch(() => {
-            res.status(299).send("שגיאה בעדכון");
-          })
-        }
-        else res.status(299).send("פרטי זיהוי שגויים");
-      })
-    }
-    else res.status(299).send("פרטי זיהוי שגויים");
-  }).catch(e => { res.status(298).send("שגיאה לא ידועה") });
-};
+  Account.update(req.body, {where: {accountId: accountId}}).then(row=>{
+    res.send(`row ${row} update`);
+  }).catch(error=>{
+    res.status(404).send(error);
+  })
+}
 
 
 exports.findAll = (req, res) => {
@@ -182,7 +169,7 @@ exports.user = (req, res) => {
 
 exports.findById = (req, res) =>{
   try {
-    Account.findByPk(req.params.accountId, {include:[{model: db.student}], attributes: { exclude: ["password"] }}).then(d=>{res.send(d)});
+    Account.findByPk(req.params.accountId, {include:[{model: db.student}, {model: db.mentor}], attributes: { exclude: ["password"] }}).then(d=>{res.send(d)});
   } catch (error) {
     res.status(404).send("auth faild");
   }

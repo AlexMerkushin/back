@@ -14,9 +14,14 @@ exports.create = async (req, res, next) => {  //create a new mentor
   }
     }
 
-exports.update = (req, res)=>{ //update the mentor 
+exports.update = async (req, res)=>{ //update the mentor 
     const accountId = req.params.accountId;
-    Mentor.update(req.body, {where:{accountId:accountId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
+    await db.account.update(req.body, {where: {accountId: accountId}});
+    Mentor.update(req.body.mentor, {where: {accountId: accountId}}).then(row=>{
+      res.status(200).send(`update ${row} rows`);
+    }).catch(error=>{
+      res.status(404).send(error);
+    })
 }
 
 

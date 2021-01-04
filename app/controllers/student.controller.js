@@ -15,10 +15,18 @@ exports.create = async (req, res, next) => {  //create a new student
 
 }
 
-exports.update = (req, res) => { //update the student 
+exports.update = async (req, res)=>{ //update the mentor 
     const accountId = req.params.accountId;
-    Student.update(req.body, { where: { accountId: accountId } }).then(d => { res.send(d) }).catch(e => { res.status(299).send(e) })
+    //res.status(200).send(req.body);
+    await db.account.update(req.body, {where: {accountId: accountId}});
+    Student.update(req.body.student, {where: {accountId: accountId}}).then(row=>{
+      res.status(200).send(`update ${row} rows`);
+    }).catch(error=>{
+      res.status(404).send(error);
+    })
 }
+
+
 
 exports.findByFacultyId = (req, res) => {
     const accountId = req.params.accountId;

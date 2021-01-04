@@ -11,6 +11,6 @@ module.exports = app => {
   router.delete("/:accountId", accounts.delete);
   router.get('/user/me', checkAuth,  accounts.user);
   router.get(`/user/:accountId`, checkAuth, accounts.findById);
-  router.put('/user/:accountId/:pass', accounts.updatePass);
+  router.put('/:accountId', accounts.updateAccount);
   app.use('/api/accounts', router);
 };
