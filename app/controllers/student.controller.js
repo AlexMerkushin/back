@@ -3,6 +3,9 @@ const Student = db.student;
 const Op = db.Sequelize.Op;
 const sequelize = db.sequelize;
 
+/*
+    יצירת סטודנט חדש
+*/
 exports.create = async (req, res, next) => {  //create a new student
 
 
@@ -15,7 +18,10 @@ exports.create = async (req, res, next) => {  //create a new student
 
 }
 
-exports.update = async (req, res)=>{ //update the mentor 
+/*
+    עדכון של סטודנט לפי מספר זהות
+*/
+exports.update = async (req, res)=>{ 
     const accountId = req.params.accountId;
     //res.status(200).send(req.body);
     await db.account.update(req.body, {where: {accountId: accountId}});
@@ -28,16 +34,11 @@ exports.update = async (req, res)=>{ //update the mentor
 
 
 
+/*
+    מציאת סטודנט לפי מספר מגמה 
+*/
 exports.findByFacultyId = (req, res) => {
     const accountId = req.params.accountId;
-    /*
-    db.faculty.findAll({include: [{model: db.account}, {model:db.student}]}).then(result=>{
-        res.send(result);
-    })
-    
-   db.faculty.findByPk(accountId, {where: {accountId: facultyId}, attributes: ['accountId']}).then
-Student.findAll({where: {facultyId: facultyId}}).then(d=>{res.status(298).send(d)}).catch({msg: "error"})
-*/
 
     db.faculty.findOne({ where: { accountId: accountId }, attributes: ['id'] }).then(result => {
         db.account.findAll({ include: [{ model: db.student, where: { facultyId: result.id } }], attributes: { exclude: ["password"] } }).then(result => {
@@ -47,17 +48,11 @@ Student.findAll({where: {facultyId: facultyId}}).then(d=>{res.status(298).send(d
 
 }
 
-exports.findByProjectId = (req, res) => {
-    const projectId = req.params.projectId;
-    Student.findAll({ where: { projectId: projectId } }, { include: [{ model: db.account }], attributes: { exclude: ['password'] } }).then(d => { res.status(298).send(d) }).catch({ msg: "error" })
-}
-
-exports.findByAccountId = (req, res) => {//
-    const accountId = req.params.accountId;
-    Student.findOne({ where: { accountId: accountId } }).then(d => { res.status(298).send(d) }).catch({ msg: "error" })
-}
 
 
+/*
+    הפונקציה מוציאה את כל הסטודנטים המקשורים לפרויקט ומוסיפה את כולם מחדש
+*/
 exports.addStudentToProject = async (req, res) => {
     const accountId1 = req.params.accountId1,
         accountId2 = req.params.accountId2,
@@ -69,23 +64,11 @@ exports.addStudentToProject = async (req, res) => {
 
 }
 
-exports.studentOfFaculty = (req, res) => {
-
-    db.faculty.findAll(
-        {
-            group: ['facultyId'], include: [
-                {
-                    model: db.student, group: ['facultyId'], attributes: [[sequelize.fn('count', sequelize.col('facultyId')), 'sum'],
-                    ]
-                }]
-        }).then(ee => {
-            res.send(ee)
-        })
-
-
-    //  Student.findAll({group: ['facultyId'], attributes:[[sequelize.fn('count', sequelize.col('facultyId')), 'studentWithGrade'],]}).then(x=>res.send(x))
-}
-
+/*
+    הפונקציה מחזירה מידע סטטיסטי לפי מגמה 
+    הסטיסטיקה:
+    מגמה, ראש מגמה, ממוצע ציונים, סטודנטים במגמה, סטודנטים עם פרויקט, סטודנטים עם ציון, ציון מינימום, ציון מקסימום
+*/
 exports.
 stat = (req, res) => {
 
@@ -116,7 +99,11 @@ stat = (req, res) => {
         */
 }
 
-
+/*
+    הפונקציה מחזירה מידע סטיסטי על מגמה לפי מספר מגמה
+הסטיסטיקה:
+    מגמה, ראש מגמה, ממוצע ציונים, סטודנטים במגמה, סטודנטים עם פרויקט, סטודנטים עם ציון, ציון מינימום, ציון מקסימום
+*/
 exports.statByFaculty = (req, res) => {
     const accountId = req.params.accountId;
     db.faculty.findOne({ where:{ accountId: accountId}, attributes:['id', 'name'], raw: true,

@@ -1,14 +1,13 @@
 module.exports = app => {
     const projects = require("../controllers/project.controller");   
+    const checkAuth = require('../controllers/middlewares/checkAuth.js');
     var router = require("express").Router();
-    router.post("/", projects.create);
-    router.put("/:projectId", projects.update);
-    router.get("/", projects.findAllProject);
-    router.get("/mentor/:accountId", projects.findByMentorId);
-    //router.get("/date/:data", projects.findByProtectionDate);
-    router.delete("/:projectId", projects.delete);
-    router.get("/:projectId", projects.findByProjectId);
-    router.get("/student/:accountId", projects.findByAccountId);
-    router.get("/headFaculty/:accountId", projects.findByHeadFacultyId);
+    router.post("/", checkAuth, projects.create); //use
+    router.put("/:projectId", checkAuth, projects.update); //use
+    router.get("/", checkAuth, projects.findAllProject); //use
+    router.get("/mentor/:accountId", checkAuth, projects.findByMentorId); //use
+    router.get("/:projectId", checkAuth, projects.findByProjectId); //use
+    router.get("/student/:accountId", checkAuth, projects.findByAccountId); //use
+    router.get("/headFaculty/:accountId", checkAuth, projects.findByHeadFacultyId); //use
     app.use('/api/projects', router);
   };

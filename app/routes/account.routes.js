@@ -2,15 +2,13 @@ module.exports = app => {
   const accounts = require("../controllers/account.controller.js");  
   const checkAuth = require('../controllers/middlewares/checkAuth.js');
   var router = require("express").Router();
-  router.post("/", accounts.create);
-  router.post('/create/:accountId', accounts.createUser, accounts.findById)
-  router.put("/:accountId/:pass", accounts.update);
-  router.get("/", accounts.findAll);
-  router.post("/login", accounts.login);
-  router.get("/:type", accounts.findAllByType);
-  router.delete("/:accountId", accounts.delete);
-  router.get('/user/me', checkAuth,  accounts.user);
-  router.get(`/user/:accountId`, checkAuth, accounts.findById);
-  router.put('/:accountId', accounts.updateAccount);
+  router.post('/create/:accountId', checkAuth, accounts.createUser, accounts.findById) //use
+  router.put("/:accountId/:pass", checkAuth, accounts.update); //use
+  router.get("/", checkAuth, accounts.findAll); //use
+  router.post("/login", accounts.login);// use
+  router.get("/:type", checkAuth, accounts.findAllByType); //use
+  router.get('/user/me', checkAuth,  accounts.user); //use
+  router.get(`/user/:accountId`, checkAuth, accounts.findById); //use
+  router.put('/:accountId', checkAuth, accounts.updateAccount); //use
   app.use('/api/accounts', router);
 };

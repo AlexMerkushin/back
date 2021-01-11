@@ -19,7 +19,10 @@ const db = require("./app/models");
 const { request } = require("express");
 
 //add a defult dat for a table
-//force is start database from new
+/*
+  איפוס של מסד נתונים שהשרת רץ מחדש
+  הכנסה של נתונים מחדש
+*/
 db.sequelize.sync({ force: true, }).then(() => {
 
   const Account = require("./app/models/data/account.js");
@@ -43,9 +46,10 @@ db.sequelize.sync({ force: true, }).then(() => {
 app.get("/", (req, res) => {
   res.json({ message: "the API project mahat;" });
 });
-
+/*
+  route = הקישורים שנכנסים אלהם
+*/
 require("./app/routes/account.routes.js")(app);
-require("./app/routes/headFaculty.routes")(app);
 require("./app/routes/faculty.routes")(app);
 require("./app/routes/project.routes")(app);
 

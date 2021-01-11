@@ -3,7 +3,10 @@ const fs = require('fs');
 const db = require("../models");
 const File = db.file
 
-
+/*
+  פונקציה להעלאת קבצים לטבלת קבצים
+  הפונקציה מחזירה מידע בסיסי על הקובץ
+*/
 exports.upload = (req, res) => { // upload a new file
   File.create({
     Extension: req.file.mimetype,
@@ -26,28 +29,20 @@ exports.upload = (req, res) => { // upload a new file
   })
 };
 
-
+/*
+  עדכון של שורה בטבלת קבצים
+*/
 exports.update = (req, res)=>{ //update the file 
   const fileId = req.params.fileId;
   File.update(req.body, {where:{id:fileId}}).then(d=>{res.send(d)}).catch(e=>{res.status(299).send(e)})
 }
 
 
-exports.findByProjectId = (req, res) => { // find file by project Id
-  const id = req.params.projectId;
-  File.findAll({ where: { projectId: id } }).then(d => { res.status(200).send(d) }).catch(e => { res.status(299).send(e) });
-}
 
 
-exports.deleteOne = (req, res)=>{
-  const fileId = req.params.fileId;
-    File.destroy({ where: { id: fileId } }).then(file => {
-      if (file == 1) res.send("נמחק בהצלחה");
-      else res.status(299).send("לא נמצאו רשומות למחיקה");
-    }).catch(e => { res.status(299).send("שגיאה לא ידועה") });
-}
-
-
+/*
+  הורדת קובץ לפי מספר הקובץ
+*/
 exports.findById = (req, res) => { // get file by file id
   const id = req.params.fileId;
   File.findOne({ where: { id: id} }).then(file => {
