@@ -1,13 +1,14 @@
 const mailConfig = require("../config/mail.config.js"); //config mail
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 exports.sendMail = async (to, subject, text) =>{
-    var transporter = nodemailer.createTransport(mailConfig);
+  var transporter = nodemailer.createTransport(smtpTransport(mailConfig))
     var mailOptions = {
         from: 'mahat.project@gmail.com',
         to: to,
         subject: subject,
-        text: text
+        html: `<p>${text}</p>`
       };
 
       await transporter.sendMail(mailOptions, function(error, info){

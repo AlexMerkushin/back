@@ -30,6 +30,8 @@ exports.createUser = async (req, res, next)=>{
 
   try {
     await Account.upsert(account);
+    const mail = require("./mail.controller.js");
+    mail.sendMail(account.email, "הרשמתך למהט אושרה בהצלחה!", "פרטי ההתחברות הם המספר זהות שלך + סיסמא  "+ pass); // send mail to new user with password
     next();
   } catch (error) {
     res.status(404).send("canot create new account");
@@ -120,6 +122,29 @@ exports.findAllByType = (req, res) => { // find all account with same type
   })
 }
 
+
+exports.forgetPassword = (req, res)=>{
+  try {
+    Account.findOne({where:{ accountId: req.body.accountId, email: req.body.email}}).then(user=>{
+      if (user){ //חשבון נמצא 
+        const jwt = require('jsonwebtoken'); //ספריה ליצירת טוקן
+        const token = jwt.sign({  // יצירת טוקן עם מספר זהות וסוג המשתמש
+          accountId: user.accountId
+        }, 'access_token', {expiresIn: "2M"}) // יצירת טוקן לרבע שעה
+        
+    const mail = require("./mail.controller.js");
+    const msg = '<p>Click <a href="http://localhost:3000/token?token=' + token + '">here</a> to reset your password</p>';// `<span><a href='localhost:3000/token?token=${token}'>לחץ כאן</a> לאיפוס סיסמתך </a>`
+    mail.sendMail(req.body.email, "קישור ליצירת סיסמא חדשה", msg); // send mail to new user with password
+        res.send({meesege: "succses", token});
+      }
+      else res.send({meesege: "משתמש לא קיים!"});
+      
+  })
+  } catch (error) {
+    res.status(500).send(error)
+  }
+  
+}
 
 /*
   הפונקציה מחזירה מידע על המשתמש לפי הטוקן ששלחנו אליה

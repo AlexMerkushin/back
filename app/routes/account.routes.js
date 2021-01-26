@@ -6,6 +6,7 @@ module.exports = app => {
   router.put("/:accountId/:pass", checkAuth, accounts.update); //use
   router.get("/", checkAuth, accounts.findAll); //use
   router.post("/login", accounts.login);// use
+  router.post("/forgetPassword", accounts.forgetPassword);
   router.get("/:type", checkAuth, accounts.findAllByType); //use
   router.get('/user/me', checkAuth,  accounts.user); //use
   router.get(`/user/:accountId`, checkAuth, accounts.findById); //use
